@@ -90,4 +90,8 @@ This metric provides a global measure of numerical error and allows a
 quantitative comparison of accuracy across different matrix sizes and NSA
 approximation orders.
 
+## 📄 License
+This project is released under the MIT License.
+
+
 
