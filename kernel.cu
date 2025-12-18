@@ -154,22 +154,6 @@ void neumannOrder3(const float* dInvDiag, const float* d_E, float* d_result, int
     cudaFree(d_Term3);
 }
 
-// ======================== UTILITAIRES CPU ======================== //
-
-void generateMatrix(float A[N][N]) {
-    printf("Génération de données aléatoires (matrice diagonale dominante)...\n");
-    for (int i = 0; i < N; i++) {
-        float rowsum = 0.0f;
-        for (int j = 0; j < N; j++) {
-            if (i == j) continue;
-            float val = ((float)(rand() % 10) * 0.1f);
-            A[i][j] = val;
-            rowsum += fabsf(val);
-        }
-        // Diagonale plus grande que la somme des autres
-        A[i][i] = rowsum + 1.0f + (float)(rand() % 5);
-    }
-}
 
 // fonction pour la charger le fichier matrixA.csv contenant la matrice A  //
 
@@ -206,7 +190,7 @@ int main() {
     float Ainv_app[N][N];
     float Ainv_exact[N][N];
 
-    // 1)  Chargement de la matrice A
+    // 1)  Chargement de la matrice A et ma matrice inverse de A provenant de Matlab
     loadMatrixCSV("C:\\Users\\ngul4685\\Desktop\\Nouveau dossier\\matrixA.csv", A);
     loadMatrixCSV("C:\\Users\\ngul4685\\Desktop\\Nouveau dossier\\matrix_inv_A.csv", Ainv_exact);
 
@@ -245,6 +229,7 @@ int main() {
 
 
     // Calculer la différence : Diff = Ainv_exact - Ainv_app
+    // il s'agit de la difference  entre la matrice inverse A provenant de matlab et celle inverseé par CUDA c 
     float Diff[N][N];
     for (int i = 0; i < N; i++)
         for (int j = 0; j < N; j++)
